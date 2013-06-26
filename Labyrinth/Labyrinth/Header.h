@@ -8,6 +8,7 @@
 #include <GL/glu.h>
 
 #include <conio.h> /* for _getch() (any keypress) */
+#include "tga.h"
 
 /* some math.h files don't define pi... */
 #ifndef M_PI

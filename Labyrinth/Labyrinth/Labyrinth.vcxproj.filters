@@ -30,10 +30,24 @@
     <ClCompile Include="lists.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tga.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tga.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\Textures\cemplankwall.tga">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Debug\Textures\stonesfloor.tga">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

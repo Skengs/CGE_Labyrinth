@@ -175,7 +175,7 @@ void init(int width, int height)
 
 
   //Wall Texture
-  info2 = tgaLoad(".\\Textures\\cemplankwall.tga");
+  info2 = tgaLoad(".\\Textures\\wall.tga");
 
   if (info2->status != TGA_OK) {
     fprintf(stderr, "error loading texture image: %d\n", info2->status);

@@ -28,26 +28,27 @@ GLuint DLists[6],texture[3];
 
 void reportGLError(const char * msg)
 {
-  GLenum errCode;
-  const GLubyte *errString;
-  while ((errCode = glGetError()) != GL_NO_ERROR) {
-    errString = gluErrorString(errCode);
-    fprintf(stderr, "OpenGL Error: %s %s\n", msg, errString);
-  }
-  return;
+	GLenum errCode;
+	const GLubyte *errString;
+	while ((errCode = glGetError()) != GL_NO_ERROR)
+	{
+		errString = gluErrorString(errCode);
+		fprintf(stderr, "OpenGL Error: %s %s\n", msg, errString);
+	}
+	return;
 }
 
 void resize(int width, int height)
 {
-  // prevent division by zero
-  if (height == 0) { height=1; }
+	// prevent division by zero
+	if (height == 0) { height=1; }
 
-  glViewport(0, 0, width, height);  
+	glViewport(0, 0, width, height);  
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(60.0f, (float)width/(float)height, 0.1f, 100.0f);
-  glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0f, (float)width/(float)height, 0.1f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 
@@ -129,127 +130,16 @@ void init(int width, int height)
 	glShadeModel(GL_SMOOTH);  
 	resize(width, height);
 	
-	//Floor Texture
-	GLsizei w, h,w2,h2,w3,h3;
-  tgaInfo *info = 0;
-  tgaInfo *info2 = 0;
-  tgaInfo *info3 = 0;
-  int mode, mode2,mode3;
+	tgaInfo *info;
+		
+	info = tgaLoad(Texture_Floor);
+	loadTextures(info, &texture[0]);
 
-  info = tgaLoad(".\\Textures\\stonesfloor.tga");
+	info = tgaLoad(Texture_Wall);
+	loadTextures(info, &texture[1]);
 
-  if (info->status != TGA_OK) {
-    fprintf(stderr, "error loading texture image: %d\n", info->status);
-    
-    return;
-  }
-  //Für Rechteckige Bild überprüfung
-  /*if (info->width != info->height) {
-    fprintf(stderr, "Image size %d x %d is not rectangular, giving up.\n",
-            info->width, info->height);
-    return;
-  }*/
-
-  mode = info->pixelDepth / 8;  // will be 3 for rgb, 4 for rgba
-  glGenTextures(1, &(texture[0]));
-
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glBindTexture(GL_TEXTURE_2D, texture[0]);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-  // Upload the texture bitmap. 
-  w  = info->width; 
-  h = info->height; 
-
-  reportGLError("before uploading texture");
-  GLint format = (mode == 4) ? GL_RGBA : GL_RGB;
-  glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format, 
-               GL_UNSIGNED_BYTE, info->imageData);
-  reportGLError("after uploading texture");
-
-  tgaDestroy(info);
-
-
-  //Wall Texture
-  info2 = tgaLoad(".\\Textures\\wall.tga");
-
-  if (info2->status != TGA_OK) {
-    fprintf(stderr, "error loading texture image: %d\n", info2->status);
-    
-    return;
-  }
-  //Für Rechteckige Bild überprüfung
-  /*if (info->width != info->height) {
-    fprintf(stderr, "Image size %d x %d is not rectangular, giving up.\n",
-            info->width, info->height);
-    return;
-  }*/
-
-  mode2 = info2->pixelDepth / 8;  // will be 3 for rgb, 4 for rgba
-  glGenTextures(1, &texture[1]);
-
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glBindTexture(GL_TEXTURE_2D, texture[1]);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-  // Upload the texture bitmap. 
-  w2  = info2->width; 
-  h2 = info2->height; 
-
-  reportGLError("before uploading texture");
-  GLint format2 = (mode2 == 4) ? GL_RGBA : GL_RGB;
-  glTexImage2D(GL_TEXTURE_2D, 0, format2, w2, h2, 0, format2, 
-               GL_UNSIGNED_BYTE, info2->imageData);
-  reportGLError("after uploading texture");
-
-  tgaDestroy(info2);
-
-  //Ceiling Texture
-  info3 = tgaLoad(".\\Textures\\ceiling.tga");
-
-  if (info3->status != TGA_OK) {
-    fprintf(stderr, "error loading texture image: %d\n", info3->status);
-    
-    return;
-  }
-  //Für Rechteckige Bild überprüfung
-  /*if (info->width != info->height) {
-    fprintf(stderr, "Image size %d x %d is not rectangular, giving up.\n",
-            info->width, info->height);
-    return;
-  }*/
-
-  mode3 = info3->pixelDepth / 8;  // will be 3 for rgb, 4 for rgba
-  glGenTextures(1, &texture[2]);
-
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glBindTexture(GL_TEXTURE_2D, texture[2]);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-
-  // Upload the texture bitmap. 
-  w3  = info3->width; 
-  h3 = info3->height; 
-
-  reportGLError("before uploading texture");
-  GLint format3 = (mode3 == 4) ? GL_RGBA : GL_RGB;
-  glTexImage2D(GL_TEXTURE_2D, 0, format3, w3, h3, 0, format3, 
-               GL_UNSIGNED_BYTE, info2->imageData);
-  reportGLError("after uploading texture");
-
-  tgaDestroy(info3);
-
+	info = tgaLoad(Texture_Ceiling);
+	loadTextures(info, &texture[2]);
 
 	// Load and precompile display lists for blocks
 	initLists();

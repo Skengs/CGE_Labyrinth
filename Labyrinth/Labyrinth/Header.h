@@ -23,6 +23,10 @@
 #define atan2f(x, y) ((float)atan2((x), (y)))
 #endif 
 
+// Textures
+#define Texture_Floor ".\\Textures\\stonesfloor.tga"
+#define Texture_Wall ".\\Textures\\wall.tga"
+#define Texture_Ceiling ".\\Textures\\ceiling.tga"
 
 // Sets max width and height of a labyrinth
 #define MazeLength 100
@@ -83,5 +87,7 @@ void timer(int value);
 void drawBlock(int shape);
 void freeMemory();
 void tryMove (char direction);
+void reportGLError(const char * msg);
 
 void initLists();
+void loadTextures(tgaInfo *info, GLuint *texture);

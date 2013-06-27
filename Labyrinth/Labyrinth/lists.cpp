@@ -28,15 +28,16 @@ void initLists()
 			glTexCoord2f(0.0f, 0.0f); glVertex3f( x, -y,  z);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f( x, -y, -z);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, -y, -z);
-			glEnd();
-			glBindTexture(GL_TEXTURE_2D, texture[2]);
-			glBegin(GL_QUADS);
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, texture[2]);
+		glBegin(GL_QUADS);
 			// ceiling
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(-x,  y,  z);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f( x,  y,  z);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f( x,  y, -z);
 			glTexCoord2f(1.0f, 0.0f); glVertex3f(-x,  y, -z);
-			glEnd();
+		glEnd();
 
 			glBindTexture(GL_TEXTURE_2D, texture[1]);
 

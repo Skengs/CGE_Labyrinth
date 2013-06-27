@@ -63,9 +63,10 @@ void display()
 
 	// Movement (Initial camera position already included)
 	glTranslatef(-sideways,0,-advance);
+
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE, GL_DECAL);
-	//glBindTexture(GL_TEXTURE_2D, texture[0]);
+
 	// draw Labyrinth
 	glPushMatrix();
 	for(int i = 0; i < height; i++)
@@ -94,7 +95,6 @@ void display()
 	}
 	glPopMatrix();
 
-	//glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }
 
@@ -249,6 +249,8 @@ void init(int width, int height)
   reportGLError("after uploading texture");
 
   tgaDestroy(info3);
+
+
 	// Load and precompile display lists for blocks
 	initLists();
 
@@ -377,7 +379,7 @@ void tryMove (char direction)
 }
 
 
-// Calls display FPS-times a minute, also checks for movement to be done
+// Calls display FPS-times a second, also checks for movement to be done
 void timer(int value)
 {
 	glutTimerFunc(1000/FPS, timer, 1); // call next frame

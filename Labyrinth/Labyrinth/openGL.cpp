@@ -31,11 +31,11 @@ char timeChar[130];
 
 void clock_format(int t)
 {
-	char minOne = (t-(t%600))+48;
-	char minTwo = ((t%600)-(t%60))+48;
-	char secOne = ((t%60)-(t%10))+48;
-	char secTwo = (t%10)+48;
-	sprintf(timeChar,"%c%c:%c%c",minOne,minTwo,secOne,secTwo);
+	int seconds = t % 60;
+	int minutes = (t / 60) % 60;
+	int hours = t / 3600;
+
+	sprintf(timeChar,"%02d:%02d:%02d", hours, minutes, seconds);
 }
 
 //Display 2dText

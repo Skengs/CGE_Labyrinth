@@ -43,6 +43,11 @@
     <ReferencePath>.\;.\GL\;$(ReferencePath)</ReferencePath>
     <LibraryPath>.\;.\GL\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>.\;.\GL\;$(IncludePath)</IncludePath>
+    <ReferencePath>.\;.\GL\;$(ReferencePath)</ReferencePath>
+    <LibraryPath>.\;.\GL\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

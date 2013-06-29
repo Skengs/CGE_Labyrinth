@@ -72,7 +72,7 @@ void clock_display()
  
     // draw the text ============================
     //GLUT glut = new GLUT();
-    glColor3f(0.0f, 1.0f, 0.0f);
+    glColor3f(0.2f, 2.0f, 0.3f);
 	glRasterPos2f(0.2, 3.5);
 	//glutBitmapString(GLUT_BITMAP_HELVETICA_18, string);
 	for(int i = 0;i<6;i++)

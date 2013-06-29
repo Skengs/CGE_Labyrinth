@@ -26,6 +26,74 @@ GLdouble sideways = 0.0;	// horizontal movement ( x-achse )
 // Display lists
 GLuint DLists[6],texture[3];
 
+int timeValue;
+char * timeChar;
+
+char *clock_format(int t)
+{
+	char minOne = (t-(t%600))+48;
+	char minTwo = ((t%600)-(t%60))+48;
+	char secOne = ((t%60)-(t%10))+48;
+	char secTwo = (t%10)+48;
+	char *charTime = (char *)minOne+minTwo+':'+secOne+secTwo+'\0';
+	timeChar = charTime;
+	return charTime;
+}
+
+//Display 2dText
+void clock_display(char *text)
+{
+	int i;
+	// backup current modelview matrix
+    glPushMatrix();
+    // reset modelview matrix
+    glLoadIdentity();
+ 
+    // set to 2D orthogonal projection =======
+    // switch to projection matrix
+    glMatrixMode(GL_PROJECTION);
+    // backup projection matrix
+    glPushMatrix();
+    // reset projection matrix
+    glLoadIdentity();
+    // set to orthogonal projection
+	glOrtho(0, width, 0, height, -1.0, 1.0);
+ 
+    // draw the text ============================
+    //GLUT glut = new GLUT();
+    glColor3f(0.2f, 2.0f, 0.3f);
+	glRasterPos2f(0.2, 3.5);
+	//glutBitmapString(GLUT_BITMAP_HELVETICA_18, string);
+	for(i = 0;i<strlen(text);i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*(text+i));
+	}
+    //===========================================
+ 
+    // restore previous projection matrix
+    glPopMatrix();
+ 
+    // restore previous modelview matrix
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
+}
+
+//Clock thread
+void tikk()
+{
+	timeValue = 0;
+
+	while( timeValue < 3601 )
+	{
+		timeValue++;
+		Sleep(1000);
+	}
+	char * end = clock_format(timeValue)+' '+'Y'+'o'+'u'+' '+'L'+'o'+'s'+'t'+'!'+'\0';
+	clock_display(end);
+	freeMemory();
+	exit(0);
+}
+
 void reportGLError(const char * msg)
 {
 	GLenum errCode;
@@ -51,43 +119,6 @@ void resize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void clock_display()
-{
-	char *s = "Hallo";
-
-	// backup current modelview matrix
-    glPushMatrix();
-    // reset modelview matrix
-    glLoadIdentity();
- 
-    // set to 2D orthogonal projection =======
-    // switch to projection matrix
-    glMatrixMode(GL_PROJECTION);
-    // backup projection matrix
-    glPushMatrix();
-    // reset projection matrix
-    glLoadIdentity();
-    // set to orthogonal projection
-	glOrtho(0, width, 0, height, -1.0, 1.0);
- 
-    // draw the text ============================
-    //GLUT glut = new GLUT();
-    glColor3f(0.2f, 2.0f, 0.3f);
-	glRasterPos2f(0.2, 3.5);
-	//glutBitmapString(GLUT_BITMAP_HELVETICA_18, string);
-	for(int i = 0;i<6;i++)
-	{
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*(s+i));
-	}
-    //===========================================
- 
-    // restore previous projection matrix
-    glPopMatrix();
- 
-    // restore previous modelview matrix
-    glMatrixMode(GL_MODELVIEW);
-    glPopMatrix();
-}
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
@@ -155,8 +186,8 @@ void display()
 		glTranslatef(0, 0, 2*MazeScale); // Move south after each line (positive z-achse)
 	}
 	glPopMatrix();
-
-	clock_display();
+	char * temp = clock_format(timeValue);
+	clock_display(temp);
 
 	glutSwapBuffers();
 }
@@ -392,6 +423,8 @@ void timer(int value)
 			if (currentPosition.height == end.height && currentPosition.width == end.width)
 			{
 				// Player has reached end of labyrinth
+				char * end = clock_format(timeValue)+' '+'Y'+'o'+'u'+' '+'W'+'o'+'n'+'!'+'\0';
+				clock_display(end);
 				freeMemory();
 				exit(0);
 			}

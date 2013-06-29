@@ -46,6 +46,8 @@ int main(int argc, char **argv)
 	char name[100];
 	FILE* file;
 
+	std::thread t(tikk);
+
 	printf("Please name your Labyrinth textfile:\n");
 	fgets(name, 100, stdin);
 
@@ -87,9 +89,13 @@ int main(int argc, char **argv)
 
 	printf("Done!\n\nStarting 3D visualisation!\n");
 	printInstructions();
-	
+
+	//t.join();
+
 	//glutFullScreen();
 	glutMainLoop();
+
+	
 
 	return 0;
 }

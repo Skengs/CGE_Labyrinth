@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <windows.h>
+#include <thread>
 
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "GL/glut.h"
 
 #include <conio.h> /* for _getch() (any keypress) */
 #include "tga.h"
@@ -78,6 +81,8 @@ FILE* CheckExistence(char*);
 bool ValidateContent(FILE*, int*, int*);
 struct MazeElement** ConvertToShapes (FILE*, int, int, struct ArrayPosition*, struct ArrayPosition*);
 void printInstructions();
+
+void tikk();
 
 // openGL
 void resize(int width, int height);

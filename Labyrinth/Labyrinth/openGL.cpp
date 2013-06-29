@@ -54,8 +54,6 @@ void resize(int width, int height)
 
 void display()
 {
-	GLfloat position[] = {-currentPosition.width*(2*MazeScale), -currentPosition.height*(2*MazeScale), 0.0, 1.0};
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
 	glLoadIdentity(); 
 
@@ -66,10 +64,6 @@ void display()
 
 	// Movement (Initial camera position already included)
 	glTranslatef(-sideways,0,-advance);
-
-	glLightfv(GL_LIGHT0,GL_POSITION, position);
-
-	glEnable(GL_LIGHTING);
 
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -102,8 +96,6 @@ void display()
 	}
 	glPopMatrix();
 
-	
-
 	glutSwapBuffers();
 }
 
@@ -131,23 +123,6 @@ void drawBlock(int shape)
 
 void init(int width, int height)  
 {
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat mat_shininess[] = { 1.0 };
-	//GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat light[] = { 0.3f, 0.3f, 0.3f, 1 };
-
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	//glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glLightfv(GL_LIGHT0,GL_SPECULAR,light);
-	glLightfv(GL_LIGHT0,GL_DIFFUSE, light);
-	GLfloat globalAmbient[] = { 0.0, 0.2, 0.2, 1.0 };
-	glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient );
-
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_DEPTH_TEST);
-
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearDepth(1.0);        
 	glDepthFunc(GL_LESS);      
@@ -155,6 +130,7 @@ void init(int width, int height)
 	glShadeModel(GL_SMOOTH);  
 	resize(width, height);
 	
+	// load textures
 	tgaInfo *info;
 		
 	info = tgaLoad(Texture_Floor);

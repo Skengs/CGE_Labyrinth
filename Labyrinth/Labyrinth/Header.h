@@ -69,6 +69,7 @@ struct Movement
 	char moveDirection;		// 'n' | 'e' | 's' | 'w'
 	char rotateDirection;	// 'l' | 'r'
 	int counter;			// Number of frames in which movement is done
+	char rememberedKey;		// Key that is pressed while already moving is saved here
 };
 
 

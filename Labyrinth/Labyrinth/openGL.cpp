@@ -215,7 +215,10 @@ void keyPressed(unsigned char key, int x, int y)
 
 					default: break;
 				}
+				movement.rememberedKey = '.'; // delete last key
 			}
+			else 
+				movement.rememberedKey = key; // remember key to process after moving
 			break;
 
 		case 's':	// move backward
@@ -242,27 +245,38 @@ void keyPressed(unsigned char key, int x, int y)
 
 					default: break;
 				}
+				movement.rememberedKey = '.'; // delete last key
 			}
+			else 
+				movement.rememberedKey = key; // remember key to process after moving
 			break;
 
 		case 'a':	// rotate 90° left
 			if(movement.counter == 0) // if not moving already
 			{
 				movement.moveDirection = '.'; // disable walking
+				movement.rememberedKey = '.'; // delete last key
+
 				movement.rotateDirection = 'l';
 				movement.counter = rotateFrames;
 				currentPosition.lookDirection = (currentPosition.lookDirection + 3) % 4; // update current lookdirection
 			}
+			else 
+				movement.rememberedKey = key; // remember key to process after moving
 			break;
 
 		case 'd':	// rotate 90° right
 			if(movement.counter == 0) // if not moving already
 			{
 				movement.moveDirection = '.'; // disable walking
+				movement.rememberedKey = '.'; // delete last key
+
 				movement.rotateDirection = 'r';
 				movement.counter = rotateFrames;
 				currentPosition.lookDirection = (currentPosition.lookDirection + 1) % 4; // update current lookdirection
 			}
+			else 
+				movement.rememberedKey = key; // remember key to process after moving
 			break;
 
 		default: break;
@@ -342,6 +356,11 @@ void timer(int value)
 				// Player has reached end of labyrinth
 				freeMemory();
 				exit(0);
+			}
+
+			if (movement.rememberedKey != '.') // executes remembered keypress
+			{
+				keyPressed(movement.rememberedKey, 0, 0);
 			}
 		}
 	}

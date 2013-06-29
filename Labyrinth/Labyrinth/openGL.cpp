@@ -27,17 +27,15 @@ GLdouble sideways = 0.0;	// horizontal movement ( x-achse )
 GLuint DLists[6],texture[3];
 
 int timeValue;
-char * timeChar;
+char timeChar[130];
 
-char *clock_format(int t)
+void clock_format(int t)
 {
 	char minOne = (t-(t%600))+48;
 	char minTwo = ((t%600)-(t%60))+48;
 	char secOne = ((t%60)-(t%10))+48;
 	char secTwo = (t%10)+48;
-	char *charTime = (char *)minOne+minTwo+':'+secOne+secTwo+'\0';
-	timeChar = charTime;
-	return charTime;
+	sprintf(timeChar,"%c%c:%c%c",minOne,minTwo,secOne,secTwo);
 }
 
 //Display 2dText
@@ -88,7 +86,7 @@ void tikk()
 		timeValue++;
 		Sleep(1000);
 	}
-	char * end = clock_format(timeValue)+' '+'Y'+'o'+'u'+' '+'L'+'o'+'s'+'t'+'!'+'\0';
+	char end[] = {" You Lost!\0"};
 	clock_display(end);
 	freeMemory();
 	exit(0);
@@ -186,8 +184,9 @@ void display()
 		glTranslatef(0, 0, 2*MazeScale); // Move south after each line (positive z-achse)
 	}
 	glPopMatrix();
-	char * temp = clock_format(timeValue);
-	clock_display(temp);
+
+	clock_format(timeValue);
+	clock_display(timeChar);
 
 	glutSwapBuffers();
 }
@@ -423,7 +422,7 @@ void timer(int value)
 			if (currentPosition.height == end.height && currentPosition.width == end.width)
 			{
 				// Player has reached end of labyrinth
-				char * end = clock_format(timeValue)+' '+'Y'+'o'+'u'+' '+'W'+'o'+'n'+'!'+'\0';
+				char end[] = {"You Won!\0"};
 				clock_display(end);
 				freeMemory();
 				exit(0);

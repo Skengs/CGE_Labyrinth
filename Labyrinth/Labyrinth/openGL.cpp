@@ -35,13 +35,13 @@ void clock_format(int t)
 	int minutes = (t / 60) % 60;
 	int hours = t / 3600;
 
-	sprintf(timeChar,"%02d:%02d:%02d", hours, minutes, seconds);
+	sprintf_s(timeChar,"%02d:%02d:%02d", hours, minutes, seconds);
 }
 
 //Display 2dText
 void clock_display(char *text)
 {
-	int i;
+	size_t i;
 	// backup current modelview matrix
     glPushMatrix();
     // reset modelview matrix
@@ -59,8 +59,8 @@ void clock_display(char *text)
  
     // draw the text ============================
     //GLUT glut = new GLUT();
-    glColor3f(0.2f, 2.0f, 0.3f);
-	glRasterPos2f(0.2, 3.5);
+    glColor3f(0.1f, 0.1f, 0.1f);
+	glRasterPos2f(0.1, 0.1);
 	//glutBitmapString(GLUT_BITMAP_HELVETICA_18, string);
 	for(i = 0;i<strlen(text);i++)
 	{
@@ -256,8 +256,14 @@ void keyPressed(unsigned char key, int x, int y)
 
 		case 27: // Escape
 			freeMemory(); // clean up first
+			//exit(0);
+			glutHideWindow();
+			glutDestroyWindow(window);
+
+			printf("\nPress any key to exit.\n");
+			_getch();
+
 			exit(0);
-			break;
 
 		case 'w':	// move foreward
 			if(movement.counter == 0) // if not moving already
@@ -422,10 +428,16 @@ void timer(int value)
 			if (currentPosition.height == end.height && currentPosition.width == end.width)
 			{
 				// Player has reached end of labyrinth
-				char end[] = {"You Won!\0"};
-				clock_display(end);
-				freeMemory();
-				exit(0);
+				/*char end[] = {"You Won!\0"};
+				clock_display(end);*/
+				
+				int seconds = timeValue % 60;
+				int minutes = (timeValue / 60) % 60;
+				int hours = timeValue / 3600;
+				
+				printf("\n\n\nCongratulations!\nIt took you %02d:%02d:%02d to complete the Labyrinth!\n", hours, minutes, seconds);
+
+				keyPressed(27, 0, 0);
 			}
 
 			if (movement.rememberedKey != '.') // executes remembered keypress
@@ -441,7 +453,7 @@ void timer(int value)
 
 void freeMemory()
 {
-	glutDestroyWindow(window);
+	//glutDestroyWindow(window);
 
 	// free display lists
 	for (int i = 0; i < 6; i++)

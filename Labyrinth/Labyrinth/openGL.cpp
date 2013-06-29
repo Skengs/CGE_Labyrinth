@@ -31,11 +31,11 @@ char timeChar[130];
 
 void clock_format(int t)
 {
-	int sec = t%60;
-	int min = (t/60)%60;
-	int ours = t/3600;
-
-	sprintf(timeChar,"%02d:%02d:%02d",ours,min,sec);
+	char minOne = (t-(t%600))+48;
+	char minTwo = ((t%600)-(t%60))+48;
+	char secOne = ((t%60)-(t%10))+48;
+	char secTwo = (t%10)+48;
+	sprintf(timeChar,"%c%c:%c%c",minOne,minTwo,secOne,secTwo);
 }
 
 //Display 2dText
@@ -60,7 +60,7 @@ void clock_display(char *text)
     // draw the text ============================
     //GLUT glut = new GLUT();
     glColor3f(0.2f, 2.0f, 0.3f);
-	glRasterPos2f(0.1, 0.1);
+	glRasterPos2f(0.2, 3.5);
 	//glutBitmapString(GLUT_BITMAP_HELVETICA_18, string);
 	for(i = 0;i<strlen(text);i++)
 	{

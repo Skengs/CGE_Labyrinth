@@ -96,5 +96,5 @@ int main(int argc, char **argv)
 
 void printInstructions()
 {
-	printf("\nUse [W] and [S] to move, [A] and [D] to rotate.\nPress [ESC] to exit.");
+	printf("\nThe blue orb marks your start, the red orb marks the end.\n\nUse [W] and [S] to move, [A] and [D] to rotate.\nPress [ESC] to exit.");
 }

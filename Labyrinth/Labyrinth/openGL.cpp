@@ -55,7 +55,9 @@ void resize(int width, int height)
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
-	glLoadIdentity(); 
+	glLoadIdentity();
+
+	GLfloat baseColor[] = {0.5, 0.5, 0.5};
 
 	// Camera lookdirection
 	gluLookAt(-sinf(RAD(angle_y)),sinf(RAD(angle_x)), cosf(RAD(angle_y)),
@@ -69,6 +71,8 @@ void display()
 	glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	// draw Labyrinth
+	glColor3fv(baseColor);
+
 	glPushMatrix();
 	for(int i = 0; i < height; i++)
 	{
@@ -88,6 +92,26 @@ void display()
 				{
 					drawBlock(Labyrinth[i][j].type);
 				}
+
+				if (i == start.height && j == start.width) // draw startpoint sphere
+				{
+					glPushMatrix();
+					glTranslatef(0, -3*MazeScale/4, 0);
+					glColor3f(0, 0, 1);
+					glutSolidSphere(MazeScale/8, 50, 25);
+					glPopMatrix();
+					glColor3fv(baseColor);
+				}
+				if (i == end.height && j == end.width) // draw endpoint sphere
+				{
+					glPushMatrix();
+					glTranslatef(0, -3*MazeScale/4, 0);
+					glColor3f(1, 0, 0);
+					glutSolidSphere(MazeScale/8, 50, 25);
+					glPopMatrix();
+					glColor3fv(baseColor);
+				}
+
 			}
 			glTranslatef(2*MazeScale, 0, 0); // Move east (positive x-achse) after each block
 		}
@@ -306,11 +330,19 @@ void timer(int value)
 		}
 		movement.counter--; // reduce counter of frames in which to move
 
-		if (movement.counter == 0) // manually override position after movement to compensate floating point operation inaccuracy
+		if (movement.counter == 0)
 		{
+			// manually override position after movement to compensate floating point operation inaccuracy
 			advance = 2*MazeScale*currentPosition.height;
 			sideways = 2*MazeScale*currentPosition.width;
 			angle_y = 90.0 * currentPosition.lookDirection;
+
+			if (currentPosition.height == end.height && currentPosition.width == end.width)
+			{
+				// Player has reached end of labyrinth
+				freeMemory();
+				exit(0);
+			}
 		}
 	}
 

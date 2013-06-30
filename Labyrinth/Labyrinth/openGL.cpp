@@ -399,13 +399,13 @@ void timer(int value)
 
 	if(movement.counter > 0)
 	{
-		if(clockStarted == false)
-		{
-			clockStarted = true;
-		}
 
 		if (movement.moveDirection != '.') // do walking
 		{
+			if(clockStarted == false)
+			{
+				clockStarted = true;
+			}
 			switch (movement.moveDirection)
 			{
 				case 'n':	advance -= moveValue;	break;	// move north

@@ -76,12 +76,17 @@ struct Movement
 
 
 // Functions
+
+// main
 FILE* CheckExistence(char*);
 bool ValidateContent(FILE*, int*, int*);
 struct MazeElement** ConvertToShapes (FILE*, int, int, struct ArrayPosition*, struct ArrayPosition*);
 void printInstructions();
 
+// clock
 void tikk();
+void clock_format(int t);
+void clock_display(char *text);
 
 // openGL
 void resize(int width, int height);
@@ -92,7 +97,8 @@ void timer(int value);
 void drawBlock(int shape);
 void freeMemory();
 void tryMove (char direction);
-void reportGLError(const char * msg);
 
+// lists
 void initLists();
 void loadTextures(tgaInfo *info, GLuint *texture);
+void reportGLError(const char * msg);

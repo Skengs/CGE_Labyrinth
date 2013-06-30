@@ -50,7 +50,7 @@ FILE* CheckExistence(char* name)
 
 bool ValidateContent(FILE* file, int* _width, int* _height)
 {
-	char line[MazeLength + 1];
+	char line[MazeLength + 2];
 	char c;
 	bool lastline = false;
 
@@ -90,7 +90,7 @@ bool ValidateContent(FILE* file, int* _width, int* _height)
 	}
 
 	// read all other lines
-	while(fgets(line, 101, file) != NULL)
+	while(fgets(line, MazeLength+1, file) != NULL)
     {
 		height++;
 		if(height > MazeLength)

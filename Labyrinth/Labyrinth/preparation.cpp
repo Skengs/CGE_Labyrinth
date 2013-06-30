@@ -8,12 +8,12 @@ struct MazeElement** ConvertToShapes (FILE* file, int width, int height, struct 
 
 	// dynamic 2dim array
 	char **TextMaze = (char **) malloc(height * sizeof(char *));
-	for(int i = 0; i < height; i++)
+	for(i = 0; i < height; i++)
 		TextMaze[i] = (char *) malloc(width * sizeof(char));
 
 	//   _-*The Datastructure*-_ ... 2D struct array
 	struct MazeElement **Labyrinth = (struct MazeElement **) malloc(height * sizeof(struct MazeElement *));
-	for(int i = 0; i < height; i++)
+	for(i = 0; i < height; i++)
 		Labyrinth[i] = (struct MazeElement *) malloc(width * sizeof(struct MazeElement));
 
 	// initialising Labyrinth
@@ -172,7 +172,6 @@ struct MazeElement** ConvertToShapes (FILE* file, int width, int height, struct 
 
 					default:
 						printf("Error! Someone just fucked up the code.\n");
-						// TODO: Call deallocate Function here
 				}
 
 			}

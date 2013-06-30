@@ -3,6 +3,18 @@
 extern GLuint DLists[6], texture[3];
 
 
+void reportGLError(const char * msg)
+{
+	GLenum errCode;
+	const GLubyte *errString;
+	while ((errCode = glGetError()) != GL_NO_ERROR)
+	{
+		errString = gluErrorString(errCode);
+		fprintf(stderr, "OpenGL Error: %s %s\n", msg, errString);
+	}
+	return;
+}
+
 void loadTextures(tgaInfo *info, GLuint *texture)
 {
 	GLsizei w, h;

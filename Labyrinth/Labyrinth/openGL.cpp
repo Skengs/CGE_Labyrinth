@@ -8,6 +8,7 @@ extern struct ArrayPosition start, end;
 struct ArrayPosition currentPosition;
 
 bool gameFinished = false;
+bool clockStarted = false;
 
 // GLUT window
 extern int window;
@@ -86,8 +87,11 @@ void tikk()
 
 	while( timeValue < 3601 )
 	{
-		timeValue++;
-		Sleep(1000);
+		if(clockStarted == true)
+		{
+			timeValue++;
+			Sleep(1000);
+		}
 	}
 	char end[] = {" You Lost!\0"};
 	clock_display(end);
@@ -386,20 +390,20 @@ void tryMove (char direction)
 	}
 }
 
-//bool clockStarted = false;
 
 // Calls display FPS-times a second, also checks for movement to be done
 void timer(int value)
 {
-	/*if(clockStarted == false)
-	{
-		std::thread t(tikk);
-		clockStarted = true;
-	}*/
+	
 	glutTimerFunc(1000/FPS, timer, 1); // call next frame
 
 	if(movement.counter > 0)
 	{
+		if(clockStarted == false)
+		{
+			clockStarted = true;
+		}
+
 		if (movement.moveDirection != '.') // do walking
 		{
 			switch (movement.moveDirection)

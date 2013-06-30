@@ -8,7 +8,6 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "GL/glut.h"
 
 #include <conio.h> /* for _getch() (any keypress) */
 #include "tga.h"

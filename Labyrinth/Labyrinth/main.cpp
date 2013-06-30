@@ -46,8 +46,6 @@ int main(int argc, char **argv)
 	char name[100];
 	FILE* file;
 
-	
-
 	printf("Please name your Labyrinth textfile:\n");
 	fgets(name, 100, stdin);
 

@@ -386,10 +386,16 @@ void tryMove (char direction)
 	}
 }
 
+//bool clockStarted = false;
 
 // Calls display FPS-times a second, also checks for movement to be done
 void timer(int value)
 {
+	/*if(clockStarted == false)
+	{
+		std::thread t(tikk);
+		clockStarted = true;
+	}*/
 	glutTimerFunc(1000/FPS, timer, 1); // call next frame
 
 	if(movement.counter > 0)

@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	char name[100];
 	FILE* file;
 
-	std::thread t(tikk);
+	
 
 	printf("Please name your Labyrinth textfile:\n");
 	fgets(name, 100, stdin);
@@ -93,8 +93,9 @@ int main(int argc, char **argv)
 	//t.join();
 
 	//glutFullScreen();
+	std::thread t(tikk);
 	glutMainLoop();
-
+	
 	
 
 	return 0;

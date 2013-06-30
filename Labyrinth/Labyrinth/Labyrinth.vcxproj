@@ -85,8 +85,9 @@
     <ClInclude Include="tga.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Debug\Textures\cemplankwall.tga" />
     <None Include="..\Debug\Textures\stonesfloor.tga" />
+    <None Include="Textures\stoneceiling.tga" />
+    <None Include="Textures\wall.tga" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

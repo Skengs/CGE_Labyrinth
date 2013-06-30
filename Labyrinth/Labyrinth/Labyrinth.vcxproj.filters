@@ -46,10 +46,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Debug\Textures\cemplankwall.tga">
+    <None Include="..\Debug\Textures\stonesfloor.tga">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Debug\Textures\stonesfloor.tga">
+    <None Include="Textures\wall.tga">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Textures\stoneceiling.tga">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
